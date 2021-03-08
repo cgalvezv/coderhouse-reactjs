@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/cgalvezv/coderhouse-reactjs.git/static/css/main.9d5b29c0.chunk.css",
+    "main.js": "/cgalvezv/coderhouse-reactjs.git/static/js/main.e6f0572a.chunk.js",
+    "main.js.map": "/cgalvezv/coderhouse-reactjs.git/static/js/main.e6f0572a.chunk.js.map",
+    "runtime-main.js": "/cgalvezv/coderhouse-reactjs.git/static/js/runtime-main.36e58204.js",
+    "runtime-main.js.map": "/cgalvezv/coderhouse-reactjs.git/static/js/runtime-main.36e58204.js.map",
+    "static/css/2.4c97ca4f.chunk.css": "/cgalvezv/coderhouse-reactjs.git/static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.a2ab6dfe.chunk.js": "/cgalvezv/coderhouse-reactjs.git/static/js/2.a2ab6dfe.chunk.js",
+    "static/js/2.a2ab6dfe.chunk.js.map": "/cgalvezv/coderhouse-reactjs.git/static/js/2.a2ab6dfe.chunk.js.map",
+    "static/js/3.0e2ed8fb.chunk.js": "/cgalvezv/coderhouse-reactjs.git/static/js/3.0e2ed8fb.chunk.js",
+    "static/js/3.0e2ed8fb.chunk.js.map": "/cgalvezv/coderhouse-reactjs.git/static/js/3.0e2ed8fb.chunk.js.map",
+    "index.html": "/cgalvezv/coderhouse-reactjs.git/index.html",
+    "static/css/2.4c97ca4f.chunk.css.map": "/cgalvezv/coderhouse-reactjs.git/static/css/2.4c97ca4f.chunk.css.map",
+    "static/css/main.9d5b29c0.chunk.css.map": "/cgalvezv/coderhouse-reactjs.git/static/css/main.9d5b29c0.chunk.css.map",
+    "static/js/2.a2ab6dfe.chunk.js.LICENSE.txt": "/cgalvezv/coderhouse-reactjs.git/static/js/2.a2ab6dfe.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.36e58204.js",
+    "static/css/2.4c97ca4f.chunk.css",
+    "static/js/2.a2ab6dfe.chunk.js",
+    "static/css/main.9d5b29c0.chunk.css",
+    "static/js/main.e6f0572a.chunk.js"
+  ]
+}

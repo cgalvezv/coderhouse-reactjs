@@ -115,6 +115,9 @@ dist
 # production
 /build
 
+# deploy
+/.netlify
+
 # misc
 .DS_Store
 .env.local

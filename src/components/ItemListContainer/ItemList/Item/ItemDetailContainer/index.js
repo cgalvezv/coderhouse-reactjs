@@ -7,6 +7,7 @@ const ItemDetailContainer = () => {
     const [product, setProduct] = useState({})
     // Se inicializa estado carga inicial
     const [loading, setLoading] = useState(true)
+    // Método que devuelve la promesa para obtener la info de un item desde un mock DB
     const getItemInfo = () => {
         const itemInfo = {
             id: 1,
@@ -26,7 +27,7 @@ const ItemDetailContainer = () => {
             setTimeout(() =>  resolve(itemInfo), 2000)
         })
     }
-
+    // Simulo la llamada de la información del item cada vez que se renderize el componente
     useEffect(() => {
         getItemInfo().then((item) => {
             setProduct(item)

@@ -1,7 +1,7 @@
 import './ItemListContainer.css'
 import React, { useState , useEffect } from 'react'
-import { ItemList } from './ItemList'
-import { LoadingPage }  from '../utils'
+import { ItemList } from '../../components/ItemList/ItemList'
+import { LoadingPage }  from '../../components/utils'
 
 const ItemListContainer = () => {
     // Se inicializa estado productos

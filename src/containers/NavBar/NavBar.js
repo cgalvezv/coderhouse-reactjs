@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CartWidget from './CartWidget'
+import CartWidget from '../../components/CartWidget/CartWidget'
 
 export class NavBar extends Component {
     render() {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import ItemDetail from './ItemDetail';
-import { LoadingPage } from '../../../../utils'
+import ItemDetail from '../../components/ItemDetail/ItemDetail';
+import { LoadingPage } from '../../components/utils'
 
 const ItemDetailContainer = () => {
     // Se inicializa estado producto

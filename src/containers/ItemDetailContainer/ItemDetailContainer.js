@@ -1,43 +1,32 @@
+import { getItems } from '../../db/mockData'
 import React, { useState, useEffect } from 'react'
 import ItemDetail from '../../components/ItemDetail/ItemDetail';
-import { LoadingPage } from '../../components/utils'
+import { LoadingPage } from '../../utils'
+import { useParams } from 'react-router-dom'
 
 const ItemDetailContainer = () => {
-    // Se inicializa estado producto
-    const [product, setProduct] = useState({})
-    // Se inicializa estado carga inicial
+    const { itemId } = useParams()
+    const [item, setItem] = useState({})
     const [loading, setLoading] = useState(true)
-    // Método que devuelve la promesa para obtener la info de un item desde un mock DB
-    const getItemInfo = () => {
-        const itemInfo = {
-            id: 1,
-            title: 'Camiseta Local Club Colo-Colo',
-            description: 'Sale por todo: el pueblo colocolino representa la valentía de David ' + 
-            'Arellano que siempre lo guía por la senda triunfal generando un lazo de indestructible' + 
-            ' unión, la fortaleza del gran Araucano que va a la lucha jamás sin descansar y la grandeza ' + 
-            'de nuestra raza sin igual por su empuje y coraje en las canchas. El equipo que ha sabido ser ' + 
-            'campeón y en las lides deportivas femeninas y másculinas pone siempre su chileno corazón.' +
-            '¡Como el Colo-Colo no hay!',
-            price: 49990,
-            imageUrl: 'https://assets.adidas.com/images/h_840,f_auto,q_auto:sensitive,fl_lossy/69596a51c4544f609b2cac9a015c6e0d_9366/Camiseta_Local_Club_Colo-Colo_Blanco_EY3709_01_laydown.jpg',
-            stock: 100
-        };
 
-        return new Promise((resolve, reject) => {
-            setTimeout(() =>  resolve(itemInfo), 2000)
-        })
-    }
-    // Simulo la llamada de la información del item cada vez que se renderize el componente
     useEffect(() => {
-        getItemInfo().then((item) => {
-            setProduct(item)
+        getItems().then((items) => {
+            const itemById = items.filter(item => item.id === Number(itemId))[0]
+            setItem(itemById)
             setLoading(false)
         })
-    })
+        return () => {
+            setLoading(true)
+        };
+    }, [itemId])
     return (
         <div>
             {
-                loading ? <LoadingPage /> : <ItemDetail item={product} />
+                loading ? 
+                    <LoadingPage /> : 
+                    <div className="container">
+                        <ItemDetail item={item} />
+                    </div>
             }
         </div>
     )

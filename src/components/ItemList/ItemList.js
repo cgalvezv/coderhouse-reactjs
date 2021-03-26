@@ -1,12 +1,12 @@
 import './ItemList.css'
 import React from 'react'
-import { Item } from '../Item/Item'
+import Item from '../Item/Item'
 
 
-export const ItemList = ({items = []}) => {
+const ItemList = ({items = []}) => {
     return (
-        <div className="items-container">
-            {items.map(item => <Item item={item} />)}   
+        <div className="row">
+            {items.map((item) => <Item key={`item-key-${item.id}`} item={item} />)}   
         </div>
     )
 }

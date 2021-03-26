@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# Proyecto Final E-Commerce Deportivo - CoderHouse React JS
+## _Camilo Gálvez Vidal_
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+En este repositorio, se encontrará el código fuente para la tienda e-commerce enfocada en vender productos deportivos. Las características principales que tendrá esta plataforma serán las siguientes:
+## Features
+- Página de bienvenida
+- Productos categorizados
+- Ordenamiento de productos
+- Carrito de compra y flujo de pago
+- Fácil navegación
 
-## Available Scripts
+Para revisar el avance de la plataforma, se puede realizar en https://coderhouse-reactjs.netlify.app. Pero si se desea montar la plataforma en un servidor local, los comandos a ejecutar para dicha instalación son los siguientes:
 
-In the project directory, you can run:
+```sh
+npm install --save
+npm start
+```
 
-### `npm start`
+y automaticamente se accederá a http://localhost:3000, donde se encontrará la plataforma ya montada en el servidor local.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Interacción actual
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Actualmente, para la primera entrega, se mostrará hasta la `v1.0.0` del repositorio. Esta versión contiene en detalle las siguientes acciones:
+- Ir a Home: muestra todo el catálogo
+- Ir a Categoría 1: muestra los productos del catálogo pertenecientes al catálogo 1
+- Ir a Categoría 2: muestra los productos del catálogo pertenecientes al catálogo 2
+- Ir a item en específico: muestra información relacionada con el producto (título, descripción, imagen y precio) en conjunto con la cantidad de stock que se puede comprar
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Versiones
 
-### `npm run build`
+| Versiones | Features | Fecha Entrega 
+| ------ | ------ | ------ | 
+| 1.0 | Se desarrolló lógica para componentes item, catalogo y navbar. Se generá routing para los componentes ya desarrollados| 25-03-2021 |
+| 2.0 | Pronto a desarrollar... | - |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Contacto
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Ante cualquier inquietud acerca del repositorio y su contenido, me pueden contactar a mi [E-mail][E-mail] o a mi contacto en [Slack][Slack].
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   [E-mail]: <camilogalvezv@gmail.com>
+   [Slack]: <@Camilo Gálvez>

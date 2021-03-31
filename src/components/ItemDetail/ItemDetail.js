@@ -5,11 +5,9 @@ import ItemCount from '../ItemCount/ItemCount'
 
 const ItemDetail = ({ item }) => {
     const [count, setCount ] = useState(0);
-    const [showCartButton, setShowCartButton ] = useState(false);
 
     const addQtyItems = (qty) => {
         setCount(qty)
-        setShowCartButton(qty > 0) 
     }
 
     return (
@@ -25,7 +23,7 @@ const ItemDetail = ({ item }) => {
                 <div className="row">
                     <div className="col-md">
                         {
-                            showCartButton ? 
+                            count > 0 ? 
                                 <div>
                                     <p>Comprarás {count} item(s)</p>
                                     <Link className="btn btn-info" to="/cart">

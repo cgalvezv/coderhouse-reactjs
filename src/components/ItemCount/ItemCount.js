@@ -12,15 +12,17 @@ const ItemCount = ({stock, initial, onAdd}) => {
       };
 
     return (
-        <div className="w-50 flex-column align-items-strech">
-            <div className="m-2 p-2 d-flex flex-row justify-content-around align-items-center">
-                <button disabled={count <= 0} className="btn btn-light" type="button" onClick={removeItem}>-</button>
-                <div>{count}</div>
-                <button disabled={count >= stock} className="btn btn-light" type="button" onClick={addItem}>+</button>
+        <div className="container">
+            <div className="w-50 flex-column align-items-strech">
+                <div className="m-2 p-2 d-flex flex-row justify-content-around align-items-center">
+                    <button disabled={count <= 0} className="btn btn-light" type="button" onClick={removeItem}>-</button>
+                    <div>{count}</div>
+                    <button disabled={count >= stock} className="btn btn-light" type="button" onClick={addItem}>+</button>
+                </div>
+                <button disabled={count <= 0} className="btn btn-info w-75" type="button" onClick={ () => onAdd(count) }>
+                    Agregar al carrito
+                </button>
             </div>
-            <button disabled={count <= 0} className="btn btn-info w-75" type="button" onClick={onAdd}>
-                Agregar al carrito
-            </button>
         </div>
     )
 }

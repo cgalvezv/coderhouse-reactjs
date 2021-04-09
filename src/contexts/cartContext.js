@@ -28,8 +28,10 @@ export const CartContext = ({ children }) => {
 
     const isInCart = (itemID) => Boolean(cart.find(el => el.item.id === itemID));
 
+    const getTotalCart = () => cart.reduce((sum, el) => sum + (el.item.price * el.quantity), 0); 
+
     return (
-        <CartRawContext.Provider value={{ cart, addItemToCart, removeItemToCart, clearCart, isInCart }}>
+        <CartRawContext.Provider value={{ cart, addItemToCart, removeItemToCart, clearCart, isInCart, getTotalCart }}>
             {children}
         </CartRawContext.Provider>
     )

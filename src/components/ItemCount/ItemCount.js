@@ -13,7 +13,7 @@ const ItemCount = ({stock, initial, onAdd}) => {
 
     return (
         <div className="container">
-            <div className="w-50 flex-column align-items-strech">
+            <div className="w-100 flex-column align-items-strech">
                 <div className="m-2 p-2 d-flex flex-row justify-content-around align-items-center">
                     <button disabled={count <= 0} className="btn btn-light" type="button" onClick={removeItem}>-</button>
                     <div>{count}</div>

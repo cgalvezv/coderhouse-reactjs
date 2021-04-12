@@ -7,7 +7,7 @@ const CartWidget = () => {
     const { cart } = useContext(CartRawContext);
 
     const configWidget = {
-        className: `btn btn-outline-light${ cart.length === 0 ? ' widget_hidden ' : ''}`,
+        className: `btn btn-outline-light`,
         to: "/cart"
     };
     

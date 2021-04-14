@@ -33,7 +33,7 @@ export const getItems =() => {
             subtitle: 'Color Negro',
             categoryId: 1,
             price: 27990,
-            imgUrl: ' https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto:sensitive,fl_lossy/ef6d15eb37ba416da5d7ac9300f88d76_9366/polera-adicolor-tricolor.jpg',
+            imgUrl: 'https://assets.adidas.com/images/w_766,h_766,f_auto,q_auto:sensitive,fl_lossy/ef6d15eb37ba416da5d7ac9300f88d76_9366/polera-adicolor-tricolor.jpg',
             description: 'Parece una coincidencia que las mejores cosas de la vida vengan de tres en tres, ' +
                 'pero no lo es. El diseño tricolor de esta polera y las emblemáticas 3 Tiras lo demuestran. Además, ' +
                 'su tacto ultrasuave se asemeja al de tus poleras preferidas que has lavado un millón de veces. Así de suave. ' +

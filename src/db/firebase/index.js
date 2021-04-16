@@ -32,3 +32,24 @@ export const getItem = (id) => {
     const item = itemCollection.doc(id)
     return item;
 }
+
+export const addOrder = (order) => {
+    const db = getFirestore();
+    const orders = db.collection('orders');
+    order.date = firebase.firestore.Timestamp.fromDate(new Date());
+    console.log('Se agregará la siguiente orden')
+    console.log(JSON.stringify(order, null, 2));
+    return orders.add(order)
+}
+
+export const triggerMassiveStockUpdate = (cart) => {
+    const db = getFirestore();
+    const batch = db.batch();
+    for (const cartItem of cart) {
+        const docRef = db.collection('items').doc(cartItem.item.id);
+        batch.update(docRef, {
+            stock: cartItem.item.stock - cartItem.quantity
+        });
+    }
+    return batch.commit()
+}

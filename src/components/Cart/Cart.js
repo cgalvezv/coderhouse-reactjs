@@ -1,25 +1,108 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { CartRawContext } from "../../contexts/cartContext";
+import { addOrder, triggerMassiveStockUpdate } from '../../db/firebase'
+import ResultPage from '../../pages/ResultPage/ResultPage'
 import './Cart.css'
 
 const Cart = () => {
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+
     const { cart, clearCart, removeItemToCart, getTotalCart } = useContext(CartRawContext)
+
+    const history = useHistory()
+
+    const generateOrder = () => {
+        let order = {};
+
+        order.buyer = {name, email, phone};
+        order.total = getTotalCart();
+        order.items = cart.map(cartItem => {
+            const id = cartItem.item.id;
+            const title = cartItem.item.title;
+            const price = cartItem.item.price * cartItem.quantity;
+            return { id, title, price };
+        })
+        
+        addOrder(order)
+            .then(document => {
+                console.log(`Orden agregada exitosamente!!! orden ID ${document.id}`)
+                console.log('Se inicia actualización de stock en DB...')
+                triggerMassiveStockUpdate(cart)
+                    .then(() => {
+                        console.log('Actualización masiva de stock exitosa!')
+                        clearCart()
+                    })
+                    .catch(err => console.log(err))
+                    .finally(() => {
+                        console.log(`Proceso de actualización masiva de stock finalizada\nRedirigiendo al home...`)
+                        history.push('/cart/finished')
+                    });
+            })
+            .catch(err => console.log(err))
+            .finally(() => console.log('Proceso de compra finalizado'));
+    }
+
+    const isValidClientInfo = () => (name && name !== '') && (phone && phone !== '') && (email && email !== '')
+
     return (
         <div>
             {   
                 cart.length > 0 ?
                     <div className="container">
+                        {
+                            !isValidClientInfo() &&
+                            <div className="row">
+                                <div className="col-md-12">    
+                                    <div className="alert alert-info" role="alert">
+                                        No se podrá completar el proceso de compra si es que no rellenas con tu información personal
+                                    </div>
+                                </div>
+                            </div>
+                        }
                         <div className="row border-0 cart-button-group">
                             <div className="col-md-8">
-                            <p className="h1 text-center">Carro de compras</p>
+                                <div className="text-left">
+                                    <p className="h1">Carro de compras</p>
+                                </div>
                             </div>
                             <div className="col-md-4">
                                 <div className="text-right">
-                                    <button className="btn btn-danger" onClick={clearCart}>
+                                    <button className="btn btn-danger header-button" onClick={clearCart}>
                                         Limpiar Carro
                                     </button>
+                                    <button className="btn btn-primary header-button" onClick={generateOrder} disabled={!isValidClientInfo()}>
+                                        Finalizar compra
+                                    </button>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="row border-0 cart-button-group">
+                            <div className="col-md-5">
+                                <input type="text"
+                                    className="form-control"
+                                    placeholder="Nombre"
+                                    value={name}
+                                    onChange={e => setName(e.target.value)}
+                                    aria-label="Nombre" />
+                            </div>
+                            <div className="col-md-4">
+                                <input type="text" 
+                                    className="form-control"
+                                    placeholder="E-mail"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    aria-label="E-mail" />
+                            </div>
+                            <div className="col-md-3">
+                                <input type="text"
+                                    className="form-control"
+                                    placeholder="Teléfono"
+                                    value={phone}
+                                    onChange={e => setPhone(e.target.value)}
+                                    aria-label="Telefono" />
                             </div>
                         </div>
                         <div className="row">
@@ -61,14 +144,12 @@ const Cart = () => {
                                 <h4>Total: ${getTotalCart()}</h4>
                             </div>
                         </div>
-                    </div>:
-                    <div className="container text-center">
-                        <div className="no-cart_wrappper">
-                            <h1 className="display-4">Carro de compras vacío</h1>
-                            <br></br>
-                            <Link className="btn btn-primary" to="/">Volver al catálogo</Link>
-                        </div>
-                    </div>
+                    </div> :
+                    <ResultPage
+                        titleText="Carro de compras vacío"
+                        buttonText="Volver al catálogo"
+                        redirectPath="/"
+                     />
             }
         </div>
         

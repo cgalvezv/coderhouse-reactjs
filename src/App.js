@@ -18,7 +18,7 @@ function App() {
             <Route path="/category/:categoryId" component={ItemListContainer} />
             <Route path="/item/:itemId" component={ItemDetailContainer}/>
             <Route exact path="/cart" component={Cart} />
-            <Route path="/cart/finished" component={
+            <Route path="/cart/finished/:orderId" component={
               () => <ResultPage 
                 titleText="Compra finalizada exitosamente"
                 buttonText="Volver al Home"

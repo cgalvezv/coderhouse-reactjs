@@ -38,7 +38,7 @@ const Cart = () => {
                     .catch(err => console.log(err))
                     .finally(() => {
                         console.log(`Proceso de actualización masiva de stock finalizada\nRedirigiendo al home...`)
-                        history.push('/cart/finished')
+                        history.push(`/cart/finished/${document.id}`)
                     });
             })
             .catch(err => console.log(err))

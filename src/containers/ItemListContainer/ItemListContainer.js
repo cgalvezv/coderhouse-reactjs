@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { getItems } from '../../services'
 import ItemList  from '../../components/ItemList/ItemList'
 import { LoadingPage } from '../../utils'
@@ -9,16 +9,21 @@ const ItemListContainer = () => {
     const { categoryId } = useParams()
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
+
+    const history = useHistory()
     
     useEffect(() => {
         setLoading(true);
         let items = categoryId !== undefined ? getItems().where('categoryId', '==', Number(categoryId)) : getItems();
         items.get().then((querySnapshot) => {
-            if (querySnapshot.size === 0) console.log('no results!!!');
+            if (querySnapshot.size === 0) {
+                history.push(`/category/${categoryId}/no-results`);
+                return;
+            }
             setItems(querySnapshot.docs.map(doc => { return { id: doc.id, ...doc.data() } }));
         }).catch((err) => console.log(`Error finding items ${JSON.stringify(err, null, 2)}`))
         .finally(() => setLoading(false))
-    }, [categoryId])
+    }, [categoryId, history])
 
     return (
         <div>

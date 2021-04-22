@@ -112,8 +112,8 @@ const Cart = () => {
                         </div>
                         <div className="row border-0 cart-button-group">
                             {
-                                formInputs.map(input => 
-                                    <div className={`col-md-${input.size}`}>
+                                formInputs.map((input, index) => 
+                                    <div key={index} className={`col-md-${input.size}`}>
                                         <input type="text"
                                             className="form-control"
                                             placeholder={input.title}
@@ -127,7 +127,7 @@ const Cart = () => {
                         <div className="row">
                             <div className="col-md-10">
                                 {   
-                                    cart.map(cartElement =>  <CartElement element={cartElement} removeElement={removeItemToCart} />) 
+                                    cart.map(cartElement => <CartElement key={cartElement.item?.id} element={cartElement} removeElement={removeItemToCart} />) 
                                 }
                             </div>
                             <div className="col-md-2">

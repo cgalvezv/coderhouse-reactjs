@@ -3,7 +3,7 @@ import NavBar from './containers/NavBar/NavBar'
 import ItemListContainer from './containers/ItemListContainer/ItemListContainer'
 import ItemDetailContainer from './containers/ItemDetailContainer/ItemDetailContainer'
 import Cart from './components/Cart/Cart'
-import ResultPage from './pages/ResultPage/ResultPage'
+import { ResultPage } from './utils';
 import { CartContext } from './contexts/cartContext'
 import './App.css';
 

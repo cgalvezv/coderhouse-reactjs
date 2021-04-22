@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom';
 import logoSuccesfully from '../assets/img/tick.png'
+import errorSuccesfully from '../assets/img/error.png'
 import './index.css'
 
 export const LoadingPage = () => {
@@ -13,15 +14,19 @@ export const LoadingPage = () => {
     )
 }
 
-export const ResultPage = ({ titleText, buttonText, redirectPath, useSuccessfullyIcon = false}) => {
+export const ResultPage = ({ titleText, buttonText, redirectPath, useSuccessfullyIcon = false, useErrorIcon = false}) => {
     const { orderId } = useParams()
     
     const hasOrderID = () => orderId !== undefined;
 
+    const useContentIcon = useSuccessfullyIcon || useErrorIcon;
+
+    const logoContent = useSuccessfullyIcon && !useErrorIcon ? logoSuccesfully : errorSuccesfully;
+
     return (
         <div className="container text-center">
             <div className="content-wrappper_result-page">
-                { useSuccessfullyIcon && <img className="img-responsive logo-size_result-page" src={logoSuccesfully} alt="Successfully Icon" /> }
+                { useContentIcon && <img className="img-responsive logo-size_result-page" src={logoContent} alt="Content Icon" /> }
                 <h1 className="display-4">{titleText}</h1>
                 {
                     hasOrderID() && <p className="lead">
@@ -29,7 +34,7 @@ export const ResultPage = ({ titleText, buttonText, redirectPath, useSuccessfull
                     </p>
                 }
                 <br></br>
-                <Link className="btn btn-primary" to={redirectPath}>{buttonText}</Link>
+                { buttonText && <Link className="btn btn-primary" to={redirectPath}>{buttonText}</Link> }
             </div>
         </div>
     )

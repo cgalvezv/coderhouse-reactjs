@@ -1,23 +1,55 @@
-import React, { useContext, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { addOrder, triggerMassiveStockUpdate } from '../../services';
 import { CartRawContext } from "../../contexts/cartContext";
-import { addOrder, triggerMassiveStockUpdate } from '../../db/firebase'
-import ResultPage from '../../pages/ResultPage/ResultPage'
+import CartElement from '../CartElement/CartElement';
+import { ResultPage, LoadingPage } from '../../utils';
 import './Cart.css'
 
 const Cart = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const { cart, clearCart, removeItemToCart, getTotalCart } = useContext(CartRawContext)
 
     const history = useHistory()
 
+
+    const formInputs = [
+        {
+            title: 'Nombre',
+            state: name,
+            onChange: e => setName(e.target.value),
+            size: 5
+        },
+        {
+            title: 'E-Mail',
+            state: email,
+            onChange: e => setEmail(e.target.value),
+            size: 4
+        },
+        {
+            title: 'Teléfono',
+            state: phone,
+            onChange: e => setPhone(e.target.value),
+            size: 3
+        }
+    ]
+
+    const isValidClientInfo = () => {
+        const hasName = (name && name !== '');
+        const hasPhone = (phone && phone !== '');
+        const hasEmail = (email && email !== '');
+        return hasName && hasPhone && hasEmail;
+    }
+
     const generateOrder = () => {
+        setLoading(true);
         let order = {};
 
-        order.buyer = {name, email, phone};
+        order.buyer = { name, email, phone };
         order.total = getTotalCart();
         order.items = cart.map(cartItem => {
             const id = cartItem.item.id;
@@ -33,7 +65,8 @@ const Cart = () => {
                 triggerMassiveStockUpdate(cart)
                     .then(() => {
                         console.log('Actualización masiva de stock exitosa!')
-                        clearCart()
+                        clearCart();
+                        setLoading(false);
                     })
                     .catch(err => console.log(err))
                     .finally(() => {
@@ -45,11 +78,9 @@ const Cart = () => {
             .finally(() => console.log('Proceso de compra finalizado'));
     }
 
-    const isValidClientInfo = () => (name && name !== '') && (phone && phone !== '') && (email && email !== '')
-
     return (
         <div>
-            {   
+            {   loading ? <LoadingPage /> :
                 cart.length > 0 ?
                     <div className="container">
                         {
@@ -80,64 +111,23 @@ const Cart = () => {
                             </div>
                         </div>
                         <div className="row border-0 cart-button-group">
-                            <div className="col-md-5">
-                                <input type="text"
-                                    className="form-control"
-                                    placeholder="Nombre"
-                                    value={name}
-                                    onChange={e => setName(e.target.value)}
-                                    aria-label="Nombre" />
-                            </div>
-                            <div className="col-md-4">
-                                <input type="text" 
-                                    className="form-control"
-                                    placeholder="E-mail"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    aria-label="E-mail" />
-                            </div>
-                            <div className="col-md-3">
-                                <input type="text"
-                                    className="form-control"
-                                    placeholder="Teléfono"
-                                    value={phone}
-                                    onChange={e => setPhone(e.target.value)}
-                                    aria-label="Telefono" />
-                            </div>
+                            {
+                                formInputs.map(input => 
+                                    <div className={`col-md-${input.size}`}>
+                                        <input type="text"
+                                            className="form-control"
+                                            placeholder={input.title}
+                                            value={input.state}
+                                            onChange={input.onChange}
+                                            aria-label={input.title} />
+                                    </div>
+                                )
+                            }
                         </div>
                         <div className="row">
                             <div className="col-md-10">
                                 {   
-                                    cart.map((cartElement) => 
-                                        <div key={`cart-item-key-${cartElement.item?.id}`} className="col-md-12">
-                                            <div className="card mb-3 card-cart">
-                                                <div className="row g-0">
-                                                    <div className="col">
-                                                        <button type="button" className="btn btn-ligth" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar item" onClick={() => removeItemToCart(cartElement.item?.id)}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
-                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    <div className="col-md-4">
-                                                        <img src={cartElement.item?.imgUrl} className="img-fluid" alt={cartElement.item?.title} />
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <div className="card-body">
-                                                            <h5 className="card-title">{ cartElement.item?.title }</h5>
-                                                            <p className="card-text text-muted">{ cartElement.item?.subtitle }</p>
-                                                            <p className="card-text">
-                                                                <small className="text-muted">Precio Unitario: $ {cartElement.item?.price}</small>
-                                                                <br></br>
-                                                                <small className="text-muted">Cantidad: {cartElement.quantity}</small>
-                                                            </p>
-                                                            <p className="card-text">$ { cartElement.item?.price *  cartElement.quantity }</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ) 
+                                    cart.map(cartElement =>  <CartElement element={cartElement} removeElement={removeItemToCart} />) 
                                 }
                             </div>
                             <div className="col-md-2">

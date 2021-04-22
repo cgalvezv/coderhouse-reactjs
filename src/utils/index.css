@@ -6,3 +6,18 @@
     top: 40%;
     left: 0px;
 }
+
+.content-wrappper_result-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+}
+
+.logo-size_result-page {
+    height: 150px;
+    width: auto;
+    padding: 20px 0;
+}

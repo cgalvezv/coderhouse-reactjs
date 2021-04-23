@@ -1,9 +1,9 @@
-import React, { useState , useEffect } from 'react'
-import { useParams, useHistory } from 'react-router-dom'
-import { getItems } from '../../services'
-import ItemList  from '../../components/ItemList/ItemList'
-import { LoadingPage } from '../../utils'
-import './ItemListContainer.css'
+import React, { useState , useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { getItems } from '../../services';
+import ItemList  from '../../components/ItemList/ItemList';
+import { LoadingPage } from '../../utils';
+import { Container } from 'react-bootstrap';
 
 const ItemListContainer = () => {
     const { categoryId } = useParams()
@@ -30,9 +30,9 @@ const ItemListContainer = () => {
             {
                 loading ? 
                     <LoadingPage /> : 
-                    <div className="container">
+                    <Container>
                         <ItemList items={items}/>
-                    </div>
+                    </Container>
             }
         </div>
     )

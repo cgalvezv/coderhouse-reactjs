@@ -1,27 +1,34 @@
-import React from 'react'
-import CartWidget from '../../components/CartWidget/CartWidget'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import CartWidget from '../../components/CartWidget/CartWidget';
+import { 
+    Navbar,
+    Nav,
+    NavDropdown,
+    Container
+ } from 'react-bootstrap';
 
 const NavBar = () => {
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-success">    
-            <div className="container-fluid">
-                <Link className="navbar-brand" to="/">Deportes Apalta</Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-                <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
-                    <div className="navbar-nav">
-                        <Link className="nav-item nav-link" to="/">Home</Link>
-                        <Link className="nav-item nav-link" to="/category/1">Casual</Link>
-                        <Link className="nav-item nav-link" to="/category/2">Deportiva</Link>
-                    </div>
-                </div>
-                <div className="d-flex">
-                    <CartWidget />
-                </div>
-            </div>
-        </nav>
+        <Navbar bg="success" variant="dark" expand="lg">
+            <Container fluid>
+                <Navbar.Brand as={Link} to="/">Deportes Apalta</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="mr-auto">
+                        <NavDropdown title="Productos" id="collasible-nav-dropdown">
+                            <NavDropdown.Item as={Link} to="/">Todas</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item as={Link} to="/category/1">Casual</NavDropdown.Item>
+                            <NavDropdown.Item as={Link} to="/category/2">Deportiva</NavDropdown.Item>
+                        </NavDropdown>
+                    </Nav>
+                    <Nav>
+                        <CartWidget />
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     )
 }
 

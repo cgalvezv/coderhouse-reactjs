@@ -1,4 +1,8 @@
-import React, { useState }  from 'react'
+import React, { useState }  from 'react';
+import {  
+    Container,
+    Button
+} from 'react-bootstrap';
 
 const ItemCount = ({stock, initial, onAdd}) => {
     const [count, setCount] = useState(parseInt(initial));
@@ -12,18 +16,18 @@ const ItemCount = ({stock, initial, onAdd}) => {
       };
 
     return (
-        <div className="container">
+        <Container>
             <div className="w-100 flex-column align-items-strech">
                 <div className="m-2 p-2 d-flex flex-row justify-content-around align-items-center">
-                    <button disabled={count <= 0} className="btn btn-light" type="button" onClick={removeItem}>-</button>
+                    <Button variant="light" disabled={count <= 0} onClick={removeItem}>-</Button>
                     <div>{count}</div>
-                    <button disabled={count >= stock} className="btn btn-light" type="button" onClick={addItem}>+</button>
+                    <Button variant="light" disabled={ count >= stock } onClick={addItem}>+</Button>
                 </div>
-                <button disabled={count <= 0} className="btn btn-info w-75" type="button" onClick={ () => onAdd(count) }>
+                <Button variant="info" className="w-75" disabled={count <= 0} onClick={ () => onAdd(count) }>
                     Agregar al carrito
-                </button>
+                </Button>
             </div>
-        </div>
+        </Container>
     )
 }
 

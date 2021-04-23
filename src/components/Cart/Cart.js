@@ -5,6 +5,14 @@ import { CartRawContext } from "../../contexts/cartContext";
 import CartElement from '../CartElement/CartElement';
 import { ResultPage, LoadingPage } from '../../utils';
 import './Cart.css'
+import { 
+    Container,
+    Row,
+    Col,
+    Alert,
+    Button,
+    Form
+ } from 'react-bootstrap';
 
 const Cart = () => {
     const [name, setName] = useState('');
@@ -82,59 +90,61 @@ const Cart = () => {
         <div>
             {   loading ? <LoadingPage /> :
                 cart.length > 0 ?
-                    <div className="container">
+                    <Container>
                         {
                             !isValidClientInfo() &&
-                            <div className="row">
-                                <div className="col-md-12">    
-                                    <div className="alert alert-info" role="alert">
+                            <Row>
+                                <Col md="12">
+                                    <Alert variant="info">
                                         No se podrá completar el proceso de compra si es que no rellenas con tu información personal
-                                    </div>
-                                </div>
-                            </div>
+                                    </Alert>
+                                </Col>
+                            </Row>
                         }
-                        <div className="row border-0 cart-button-group">
-                            <div className="col-md-8">
+                        <Row className="border-0 cart-button-group">
+                            <Col md="8">
                                 <div className="text-left">
                                     <p className="h1">Carro de compras</p>
                                 </div>
-                            </div>
-                            <div className="col-md-4">
+                            </Col>
+                            <Col md="4">
                                 <div className="text-right">
-                                    <button className="btn btn-danger header-button" onClick={clearCart}>
+                                    <Button variant="danger" className="header-button" onClick={clearCart}>
                                         Limpiar Carro
-                                    </button>
-                                    <button className="btn btn-primary header-button" onClick={generateOrder} disabled={!isValidClientInfo()}>
+                                    </Button>
+                                    <Button variant="primary" className="header-button" onClick={generateOrder} disabled={!isValidClientInfo()}>
                                         Finalizar compra
-                                    </button>
+                                    </Button>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="row border-0 cart-button-group">
+                            </Col>
+                        </Row>
+                        <Row className="border-0 cart-button-group">
                             {
                                 formInputs.map((input, index) => 
-                                    <div key={index} className={`col-md-${input.size}`}>
-                                        <input type="text"
-                                            className="form-control"
-                                            placeholder={input.title}
-                                            value={input.state}
-                                            onChange={input.onChange}
-                                            aria-label={input.title} />
-                                    </div>
+                                    <Col key={index} md={input.size}>
+                                        <Form.Group controlId={input.title}>
+                                            <Form.Control 
+                                                type="text"
+                                                placeholder={input.title}
+                                                value={input.state}
+                                                onChange={input.onChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
                                 )
                             }
-                        </div>
-                        <div className="row">
-                            <div className="col-md-10">
+                        </Row>
+                        <Row>
+                            <Col md="10">
                                 {   
                                     cart.map(cartElement => <CartElement key={cartElement.item?.id} element={cartElement} removeElement={removeItemToCart} />) 
                                 }
-                            </div>
-                            <div className="col-md-2">
+                            </Col>
+                            <Col md="2">
                                 <h4>Total: ${getTotalCart()}</h4>
-                            </div>
-                        </div>
-                    </div> :
+                            </Col>
+                        </Row>
+                    </Container>:
                     <ResultPage
                         titleText="Carro de compras vacío"
                         buttonText="Volver al catálogo"

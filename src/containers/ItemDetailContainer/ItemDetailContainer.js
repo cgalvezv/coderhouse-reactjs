@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getItem } from '../../services';
 import ItemDetail from '../../components/ItemDetail/ItemDetail';
 import { LoadingPage } from '../../utils';
+import { Container } from 'react-bootstrap';
 
 const ItemDetailContainer = () => {
     const { itemId } = useParams()
@@ -27,9 +28,9 @@ const ItemDetailContainer = () => {
             {
                 loading ? 
                     <LoadingPage /> : 
-                    <div className="container">
+                    <Container>
                         <ItemDetail item={item} />
-                    </div>
+                    </Container>
             }
         </div>
     )

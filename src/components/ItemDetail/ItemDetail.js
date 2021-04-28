@@ -48,7 +48,7 @@ const ItemDetail = ({ item }) => {
                                 <p>Agregaste {count} item(s)</p>
                             </Col>
                             <Col md="6">
-                                <Button as={Link} to="/cart">
+                                <Button as={Link} to="/cart" variant="link">
                                     Terminar mi compra
                                 </Button>
                             </Col>

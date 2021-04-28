@@ -147,7 +147,7 @@ const Cart = () => {
                     <ResultPage
                         titleText="Carro de compras vacío"
                         buttonText="Volver al catálogo"
-                        redirectPath="/"
+                        redirectPath="/category"
                      />
             }
         </div>

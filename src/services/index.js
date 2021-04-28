@@ -7,7 +7,7 @@ import {
 export const getItems = () => {
     const itemCollection = getFirestoreCollection('items');
     return itemCollection;
-} 
+}
 
 export const getItem = (id) => {
     const itemCollection = getFirestoreCollection('items');

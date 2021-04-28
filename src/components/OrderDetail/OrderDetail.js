@@ -4,6 +4,8 @@ import {
     Button,
     Card,
     Col,
+    OverlayTrigger,
+    Tooltip,
     Row
 } from 'react-bootstrap';
 import './OrderDetail.css'
@@ -18,7 +20,17 @@ const OrderDetail = ({ index, order }) => {
                 <Accordion.Toggle as={Button} variant="link" className="order_detail-toggle" eventKey={index}>
                     <Row>
                         <Col md="4">
-                            <span className="text-left">Nº {order.id}</span>
+                            <OverlayTrigger
+                                key="left"
+                                placement="left"
+                                overlay={
+                                    <Tooltip>
+                                        Click para ver detalle de la orden
+                                    </Tooltip>
+                                }
+                            >
+                                <span className="text-left">Nº {order.id}</span>
+                            </OverlayTrigger>
                         </Col>
                         <Col md="8">
                             <p className="text-right">{order.buyer.name} - {order.buyer.phone}</p>

@@ -1,3 +1,4 @@
+import HomeContainer from '../containers/HomeContainer/HomeContainer'
 import ItemListContainer from '../containers/ItemListContainer/ItemListContainer'
 import ItemDetailContainer from '../containers/ItemDetailContainer/ItemDetailContainer'
 import OrderListContainer from '../containers/OrderListContainer/OrderListContainer'
@@ -8,12 +9,17 @@ const routes = [
     {
         path: '/',
         exact: true,
-        component: ItemListContainer
+        component: HomeContainer
     },
     {
         path: '/orders',
         exact: true,
         component: OrderListContainer
+    },
+    {
+        path: '/category',
+        exact: true,
+        component: ItemListContainer
     },
     {
         path: '/category/:categoryId',

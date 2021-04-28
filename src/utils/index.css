@@ -32,3 +32,44 @@
 .plain_go-back-img {
     width: 30px;
 }
+
+.img_home-banner {
+    filter: brightness(40%);
+}
+@media (min-width: 768px) {
+    .img_home-banner {
+        height: 500px !important;
+    }
+}
+@media (min-width: 992px) {
+    .img_home-banner {
+        height: 500px !important;
+    } 
+}
+@media (min-width: 1200px) {
+    .img_home-banner {
+        height: 500px !important;
+    }
+}
+
+.divider_home-random-item {
+    margin: 5rem 0;
+}
+
+@media (min-width: 576px) {
+    .heading-home_random_item {
+        margin-top: 7rem;
+    }
+}
+
+@media (min-width: 544px) {
+    .heading-home_random_item {
+        font-size: 50px;
+    }
+}
+
+.heading-home_random_item {
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
+}

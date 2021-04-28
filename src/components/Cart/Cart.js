@@ -24,7 +24,6 @@ const Cart = () => {
 
     const history = useHistory()
 
-
     const formInputs = [
         {
             title: 'Nombre',

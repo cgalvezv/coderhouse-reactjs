@@ -56,7 +56,7 @@ const ItemDetail = ({ item }) => {
                 }
             </Col>
             <Col md="5">
-                <Image src={item?.imgUrl} alt={item?.title} fluid thumbnail/>
+                <Image src={item?.imgUrl} alt={item?.title} fluid thumbnail className="item-detail_img"/>
             </Col>
         </Row>
     )

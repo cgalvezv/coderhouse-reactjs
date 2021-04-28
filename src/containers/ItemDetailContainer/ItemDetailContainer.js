@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { getItem } from '../../services';
 import ItemDetail from '../../components/ItemDetail/ItemDetail';
-import { LoadingPage } from '../../utils';
+import { 
+    LoadingPage,
+    GoBackButton
+ } from '../../utils';
 import { Container } from 'react-bootstrap';
 
 const ItemDetailContainer = () => {
@@ -23,14 +26,20 @@ const ItemDetailContainer = () => {
         }).catch((err) => console.log(`Error finding item ${JSON.stringify(err, null, 2)}`))
         .finally(() => setLoading(false))
     }, [itemId, history])
+    
     return (
         <div>
             {
                 loading ? 
-                    <LoadingPage /> : 
-                    <Container>
-                        <ItemDetail item={item} />
-                    </Container>
+                    <LoadingPage /> :
+                    <>
+                        <div className="text-left">
+                            <GoBackButton />
+                        </div>
+                        <Container>
+                            <ItemDetail item={item} />
+                        </Container>
+                    </>
             }
         </div>
     )

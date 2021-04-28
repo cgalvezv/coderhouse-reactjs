@@ -21,3 +21,14 @@
     width: auto;
     padding: 20px 0;
 }
+
+.plain_go-back-button {
+    background-color: white !important;
+    border-color: white !important;
+    color: black !important;
+    margin: 20px;
+}
+
+.plain_go-back-img {
+    width: 30px;
+}

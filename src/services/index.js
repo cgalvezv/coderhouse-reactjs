@@ -23,10 +23,13 @@ export const getCategories = () => {
 export const addOrder = (order) => {
     const orders = getFirestoreCollection('orders');
     order.date = getFirestoreDate(new Date());
-    console.log('Se agregará la siguiente orden');
-    console.log(JSON.stringify(order, null, 2));
     return orders.add(order)
 }
+
+export const getOrdersByUserEmail = (email) => {
+    const orders = getFirestoreCollection('orders');
+    return orders.where('buyer.email', '==', email)
+}   
 
 export const triggerMassiveStockUpdate = (cart) => {
     const batch = getFirestoreBatch();

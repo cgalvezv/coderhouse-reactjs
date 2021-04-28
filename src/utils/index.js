@@ -1,8 +1,18 @@
-import React from 'react'
-import { useParams, Link } from 'react-router-dom';
-import logoSuccesfully from '../assets/img/tick.png'
-import errorSuccesfully from '../assets/img/error.png'
-import './index.css'
+import React from 'react';
+import { 
+    Link,
+    useParams,
+    useHistory
+} from 'react-router-dom';
+import logoSuccesfully from '../assets/img/tick.png';
+import errorSuccesfully from '../assets/img/error.png';
+import backArrow from '../assets/img/back_arrow.png';
+import './index.css';
+import {  
+    Button,
+    Image
+} from 'react-bootstrap';
+
 
 export const LoadingPage = () => {
     return (
@@ -37,6 +47,17 @@ export const ResultPage = ({ titleText, buttonText, redirectPath, useSuccessfull
                 { buttonText && <Link className="btn btn-primary" to={redirectPath}>{buttonText}</Link> }
             </div>
         </div>
+    )
+}
+
+export const GoBackButton = () => {
+
+    const history = useHistory()
+    
+    return (
+        <Button variant="primary" onClick={() => history.goBack()} className="plain_go-back-button">
+            <Image src={backArrow} className="img-responsive plain_go-back-img" alt="Go back arrow"/>
+        </Button>
     )
 }
 

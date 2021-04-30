@@ -26,14 +26,16 @@ const OrderListContainer = () => {
         })
         .catch((err) => console.log(`Error finding orders ${JSON.stringify(err, null, 2)}`))
         .finally(() => setLoading(false))
-    }
+
+        return () => { setOrders([]) }
+    }   
 
     return (
         <Container>
             <Form className="user-form_container">
                 <h1>
-                    Seguimiento de ordenes
-                    <p className="lead">Ingrese email del usuario para conocer sus ordenes</p>
+                    Mis ordenes
+                    <p className="lead">Ingrese e-mail del usuario para conocer sus ordenes</p>
                 </h1>
                 <Form.Row className="align-items-center">
                     <Col md="10">
@@ -59,7 +61,8 @@ const OrderListContainer = () => {
                     </Col>
                 </Form.Row>
             </Form>
-            {   loading ? 
+            {   
+                loading ? 
                     <LoadingPage /> :
                     orders.length > 0 &&
                         <>
@@ -71,9 +74,6 @@ const OrderListContainer = () => {
                                                 Filtrar
                                             </Form.Label>
                                             <InputGroup className="mb-2">
-                                                <InputGroup.Prepend>
-                                                <InputGroup.Text>Filtro</InputGroup.Text>
-                                                </InputGroup.Prepend>
                                                 <FormControl 
                                                     id="filterControl" 
                                                     placeholder="Ingrese número de orden para aplicar filtro"

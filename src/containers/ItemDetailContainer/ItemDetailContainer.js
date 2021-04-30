@@ -25,6 +25,8 @@ const ItemDetailContainer = () => {
             setItem({ id: doc.id, ...doc.data() });
         }).catch((err) => console.log(`Error finding item ${JSON.stringify(err, null, 2)}`))
         .finally(() => setLoading(false))
+
+        return () => { setItem({}) }
     }, [itemId, history])
     
     return (

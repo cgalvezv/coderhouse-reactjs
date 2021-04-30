@@ -23,6 +23,8 @@ const ItemListContainer = () => {
             setItems(querySnapshot.docs.map(doc => { return { id: doc.id, ...doc.data() } }));
         }).catch((err) => console.log(`Error finding items ${JSON.stringify(err, null, 2)}`))
         .finally(() => setLoading(false))
+
+        return () => { setItems([]) }
     }, [categoryId, history])
 
     return (

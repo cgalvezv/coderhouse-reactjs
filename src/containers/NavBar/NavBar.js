@@ -22,7 +22,7 @@ const NavBar = () => {
                             <NavDropdown.Item as={Link} to="/category/1">Casual</NavDropdown.Item>
                             <NavDropdown.Item as={Link} to="/category/2">Deportiva</NavDropdown.Item>
                         </NavDropdown>
-                        <Nav.Link as={Link} to="/orders">Seguimiento de ordenes</Nav.Link>
+                        <Nav.Link as={Link} to="/orders">Mis ordenes</Nav.Link>
                     </Nav>
                     <Nav>
                         <CartWidget />

@@ -46,7 +46,7 @@ export const HomeBanner = () => {
         <Carousel fade>
             {
                 bannerInfoArray.map(item => 
-                    <Carousel.Item>
+                    <Carousel.Item key={`carrousel-item-${item.id}`}>
                         <img
                             className="d-block w-100 img_home-banner"
                             src={item.img}

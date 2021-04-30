@@ -5,8 +5,8 @@ En este repositorio, se encontrará el código fuente para la tienda e-commerce 
 ## Features
 - Página de bienvenida
 - Productos categorizados
-- Ordenamiento de productos
-- Carrito de compra y flujo de pago
+- Página "Mis ordenes" con filtramiento
+- Carrito de compra y flujo de checkout
 - Fácil navegación
 
 Para revisar el avance de la plataforma, se puede realizar en https://coderhouse-reactjs.netlify.app. Pero si se desea montar la plataforma en un servidor local, los comandos a ejecutar para dicha instalación son los siguientes:
@@ -18,13 +18,21 @@ npm start
 
 y automaticamente se accederá a http://localhost:3000, donde se encontrará la plataforma ya montada en el servidor local.
 
+## Componentes agregados
+
+
+## Interacción
+-Compra exitosa
+![Primer Gif](https://media.giphy.com/media/Ucrz6YiJcegEwgxeRC/giphy.gif)
 ## Interacción actual
 
-Actualmente, para la primera entrega, se mostrará hasta la `v1.0.0` del repositorio. Esta versión contiene en detalle las siguientes acciones:
+Para la primera entrega, se mostrará hasta la `v1.0.0` del repositorio. Esta versión contiene en detalle las siguientes acciones:
 - Ir a Home: muestra todo el catálogo
 - Ir a Categoría 1: muestra los productos del catálogo pertenecientes al catálogo 1
 - Ir a Categoría 2: muestra los productos del catálogo pertenecientes al catálogo 2
 - Ir a item en específico: muestra información relacionada con el producto (título, descripción, imagen y precio) en conjunto con la cantidad de stock que se puede comprar
+
+
 
 
 ## Versiones

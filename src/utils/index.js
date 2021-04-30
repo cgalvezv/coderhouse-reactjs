@@ -71,32 +71,27 @@ export const HomeRandomItem = ({ textAlign = 'left', isFinalRandomItem=false}) =
                 if (querySnapshot.size === 0) return;
                 const randomIndex = Math.floor(Math.random() * querySnapshot.size);
                 const newRandomItem = { id: querySnapshot.docs[randomIndex].id, ...querySnapshot.docs[randomIndex].data()}
-                console.log('newRandomItem', newRandomItem)
                 setRandomItem(newRandomItem);
             })
     }, [])
+
+    const getRandomItemBody = () => <Col md="7" className={`text-${textAlign}`}>
+                                        <h2 className="heading-home_random_item">{randomItem?.title || 'Cargando...'}</h2>
+                                        <p className="lead">{randomItem?.description || ''}</p>
+                                        <div className="text-center">
+                                            { randomItem?.id && <Button variant="primary" as={Link} to={`/item/${randomItem?.id}`}>Ver producto</Button>}
+                                        </div>
+                                    </Col>
 
     return (
         <div>
             <hr className="divider_home-random-item"/>
             <Row>
-                {
-                    textAlign === 'left' &&
-                        <Col md="7" className={`text-${textAlign}`}>
-                            <h2 className="heading-home_random_item">{randomItem?.title || 'Cargando...'}</h2>
-                            <p className="lead">{randomItem?.description || ''}</p>
-                        </Col>
-                }
+                { textAlign === 'left' && getRandomItemBody() }
                 <Col md="5">
                     <Image src={randomItem?.imgUrl} alt={randomItem?.title} fluid thumbnail className="item-detail_img"/>
                 </Col>
-                {
-                    textAlign === 'right' &&
-                        <Col md="7" className={`text-${textAlign}`}>
-                            <h2 className="heading-home_random_item">{randomItem?.title || 'Cargando...'}</h2>
-                            <p className="lead">{randomItem?.description || ''}</p>
-                        </Col>
-                }
+                { textAlign === 'right' && getRandomItemBody() }
             </Row>
             {
                 isFinalRandomItem &&

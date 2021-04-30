@@ -61,6 +61,19 @@ y automaticamente se accederá a http://localhost:3000, donde se encontrará la 
 **Páginas de error**
 ![Gif buscar orden](https://media.giphy.com/media/5htRMjX51KRMVuImT8/giphy.gif)
 
+## Interacción - Versión Móvil
+**Página Bienvenida y productos**
+![Gif Home](https://media.giphy.com/media/zL7gV7DzZe6Ugi5eza/giphy.gif)
+
+**Compra exitosa**
+![Gif compra exitosa](https://media.giphy.com/media/QFHmr2QOOeR1chX03O/giphy.gif)
+
+**Búsqueda de ordenes**
+![Gif buscar orden](https://media.giphy.com/media/4LMbSESrgwnUiNfqGN/giphy.gif)
+
+**Página de error**
+![Gif buscar orden](https://media.giphy.com/media/VkoadouH5Bks6dTVUd/giphy.gif)
+
 ## Versiones
 
 | Versiones | Features | Fecha Entrega 

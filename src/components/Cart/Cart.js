@@ -15,9 +15,11 @@ import {
  } from 'react-bootstrap';
 
 const Cart = () => {
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [emailConfirmation, setEmailConfirmation] = useState('');
     const [loading, setLoading] = useState(false)
 
     const { cart, clearCart, removeItemToCart, getTotalCart } = useContext(CartRawContext)
@@ -27,34 +29,59 @@ const Cart = () => {
     const formInputs = [
         {
             title: 'Nombre',
-            state: name,
-            onChange: e => setName(e.target.value),
-            size: 5
+            state: firstName,
+            onChange: e => setFirstName(e.target.value),
+            size: 4
         },
         {
-            title: 'E-Mail',
-            state: email,
-            onChange: e => setEmail(e.target.value),
+            title: 'Apellidos',
+            state: lastName,
+            onChange: e => setLastName(e.target.value),
             size: 4
         },
         {
             title: 'Teléfono',
             state: phone,
             onChange: e => setPhone(e.target.value),
-            size: 3
+            size: 4
+        },
+        {
+            title: 'E-Mail',
+            state: email,
+            onChange: e => setEmail(e.target.value),
+            size: 6
+        },
+        {
+            title: 'Confirmación E-Mail',
+            state: emailConfirmation,
+            onChange: e => setEmailConfirmation(e.target.value),
+            size: 6
         }
     ]
 
-    const isValidClientInfo = () => {
-        const hasName = (name && name !== '');
+    const generateAlert = (msg, variant) => <Row>
+                                                <Col md="12">
+                                                    <Alert variant={variant}>{ msg }</Alert>
+                                                </Col>
+                                            </Row>
+
+    const isEmptyClientInfo = () => {
+        const hasFirstName = (firstName && firstName !== '');
+        const hasLastName = (lastName && lastName !== '');
         const hasPhone = (phone && phone !== '');
         const hasEmail = (email && email !== '');
-        return hasName && hasPhone && hasEmail;
+        const hasConfirmationEmail = (emailConfirmation && emailConfirmation !== '');
+        return hasFirstName && hasPhone && hasLastName && hasEmail && hasConfirmationEmail;
     }
+
+    const isEmailConfirmated = () => email === emailConfirmation;
+
+    const isValidClientInfo = () => isEmptyClientInfo() && isEmailConfirmated();
 
     const generateOrder = () => {
         setLoading(true);
         let order = {};
+        const name = `${firstName} ${lastName}`
 
         order.buyer = { name, email, phone };
         order.total = getTotalCart();
@@ -67,17 +94,13 @@ const Cart = () => {
         
         addOrder(order)
             .then(document => {
-                console.log(`Orden agregada exitosamente!!! orden ID ${document.id}`)
-                console.log('Se inicia actualización de stock en DB...')
                 triggerMassiveStockUpdate(cart)
                     .then(() => {
-                        console.log('Actualización masiva de stock exitosa!')
                         clearCart();
                         setLoading(false);
                     })
                     .catch(err => console.log(err))
                     .finally(() => {
-                        console.log(`Proceso de actualización masiva de stock finalizada\nRedirigiendo al home...`)
                         history.push(`/cart/finished/${document.id}`)
                     });
             })
@@ -90,16 +113,8 @@ const Cart = () => {
             {   loading ? <LoadingPage /> :
                 cart.length > 0 ?
                     <Container>
-                        {
-                            !isValidClientInfo() &&
-                            <Row>
-                                <Col md="12">
-                                    <Alert variant="info">
-                                        No se podrá completar el proceso de compra si es que no rellenas con tu información personal
-                                    </Alert>
-                                </Col>
-                            </Row>
-                        }
+                        { !isEmptyClientInfo() && generateAlert('No se podrá completar el proceso de compra si es que no rellenas con tu información personal', 'info') }
+                        { !isEmailConfirmated() && generateAlert('El e-mail de confirmación no es igual al e-mail del cliente ingresado', 'danger') }
                         <Row className="border-0 cart-button-group">
                             <Col md="8">
                                 <div className="text-left">
@@ -135,9 +150,7 @@ const Cart = () => {
                         </Row>
                         <Row>
                             <Col md="10">
-                                {   
-                                    cart.map(cartElement => <CartElement key={cartElement.item?.id} element={cartElement} removeElement={removeItemToCart} />) 
-                                }
+                                { cart.map(cartElement => <CartElement key={cartElement.item?.id} element={cartElement} removeElement={removeItemToCart} />) }
                             </Col>
                             <Col md="2">
                                 <h4>Total: ${getTotalCart()}</h4>

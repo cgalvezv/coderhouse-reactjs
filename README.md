@@ -7,40 +7,66 @@ En este repositorio, se encontrará el código fuente para la tienda e-commerce 
 - Productos categorizados
 - Página "Mis ordenes" con filtramiento
 - Carrito de compra y flujo de checkout
-- Fácil navegación
+- Fácil navegación y apta para móviles
 
 Para revisar el avance de la plataforma, se puede realizar en https://coderhouse-reactjs.netlify.app. Pero si se desea montar la plataforma en un servidor local, los comandos a ejecutar para dicha instalación son los siguientes:
 
 ```sh
-npm install --save
+npm install
 npm start
 ```
 
 y automaticamente se accederá a http://localhost:3000, donde se encontrará la plataforma ya montada en el servidor local.
 
-## Componentes agregados
+## Componentes agregados que fueron recomendados en el proyecto
+- **Componentes**
+    - Cart
+    - CartWidget
+    - Item
+    - ItemCount
+    - ItemDetail
+    - ItemList
+- **Contenedores**
+    - ItemDetailContainer
+    - ItemListContainer
+    - NavBar
+- **Contextos**
+    - CartContext
+
+## Componentes agregados de manera autónoma y justificación
+- **Componentes**
+    - CartElement: vista y lógica para cada uno de los elementos existentes en el carro de compra. Fue agregado para abstraer esté código, del componente *Cart*.
+    - OrderDetail: vista y lógica para cada una las ordenes asignadas a un cliente en espécifico. Fue agregado para abstraer esté código, del componente que contendrá la página *Mis ordenes*.
+    - OrderList: vista y lógica para el listado de las ordenes asignadas a un cliente. Fue agregado para abstraer esté código, del componente que contendrá la página *Mis ordenes*.
+- **Contenedores**
+    - HomeContainer: vista y lógica que contiene la página de bienvenida.
+    - OrderListContainer: vista y lógica que contendrá las página *Mis ordenes*, en conjunto con sus componentes hijos.
+- **Rutas**: Con fines de oprimización de código, se mueven las rutas a un archivo a parte.
+- **Servicios**: Se crean dos archivos para la conección con **Firebase**, uno para la configuración de la app *Firestore* y otro con los métodos para acceder a las coleciones y documentos existentes.
 
 
-## Interacción
--Compra exitosa
-![Primer Gif](https://media.giphy.com/media/Ucrz6YiJcegEwgxeRC/giphy.gif)
-## Interacción actual
+## Interacción - Versión Web
+**Página Bienvenida**
+![Gif Home](https://media.giphy.com/media/PbIxi8sZ2eWG619THD/giphy.gif)
 
-Para la primera entrega, se mostrará hasta la `v1.0.0` del repositorio. Esta versión contiene en detalle las siguientes acciones:
-- Ir a Home: muestra todo el catálogo
-- Ir a Categoría 1: muestra los productos del catálogo pertenecientes al catálogo 1
-- Ir a Categoría 2: muestra los productos del catálogo pertenecientes al catálogo 2
-- Ir a item en específico: muestra información relacionada con el producto (título, descripción, imagen y precio) en conjunto con la cantidad de stock que se puede comprar
+**Productos y categorización**
+![Gif items](https://media.giphy.com/media/kKHnmViXTJDG3Xwq5u/giphy.gif)
 
+**Compra exitosa**
+![Gif compra exitosa](https://media.giphy.com/media/8YRxb3eZFR7mPvgoJk/giphy.gif)
 
+**Búsqueda de ordenes y filtrado**
+![Gif buscar orden](https://media.giphy.com/media/WOoi0nH36y6HqjdkOe/giphy.gif)
 
+**Páginas de error**
+![Gif buscar orden](https://media.giphy.com/media/5htRMjX51KRMVuImT8/giphy.gif)
 
 ## Versiones
 
 | Versiones | Features | Fecha Entrega 
 | ------ | ------ | ------ | 
 | 1.0 | Se desarrolló lógica para componentes item, catalogo y navbar. Se generá routing para los componentes ya desarrollados| 25-03-2021 |
-| 2.0 | Pronto a desarrollar... | - |
+| 2.0 | Se integra con Firebase, para la obtención de datos. Se agregá página de "Mis ordenes" y página de bienvenida. Se agrega carro de compra con finalización de checkout | 29-04-2021 |
 
 ## Contacto
 

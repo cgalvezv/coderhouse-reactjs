@@ -1,23 +1,89 @@
-import React, { useContext, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { addOrder, triggerMassiveStockUpdate } from '../../services';
 import { CartRawContext } from "../../contexts/cartContext";
-import { addOrder, triggerMassiveStockUpdate } from '../../db/firebase'
-import ResultPage from '../../pages/ResultPage/ResultPage'
+import CartElement from '../CartElement/CartElement';
+import { ResultPage, LoadingPage } from '../../utils';
 import './Cart.css'
+import { 
+    Container,
+    Row,
+    Col,
+    Alert,
+    Button,
+    Form
+ } from 'react-bootstrap';
 
 const Cart = () => {
-    const [name, setName] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
+    const [emailConfirmation, setEmailConfirmation] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const { cart, clearCart, removeItemToCart, getTotalCart } = useContext(CartRawContext)
 
     const history = useHistory()
 
-    const generateOrder = () => {
-        let order = {};
+    const formInputs = [
+        {
+            title: 'Nombre',
+            state: firstName,
+            onChange: e => setFirstName(e.target.value),
+            size: 4
+        },
+        {
+            title: 'Apellidos',
+            state: lastName,
+            onChange: e => setLastName(e.target.value),
+            size: 4
+        },
+        {
+            title: 'Teléfono',
+            state: phone,
+            onChange: e => setPhone(e.target.value),
+            size: 4
+        },
+        {
+            title: 'E-Mail',
+            state: email,
+            onChange: e => setEmail(e.target.value),
+            size: 6
+        },
+        {
+            title: 'Confirmación E-Mail',
+            state: emailConfirmation,
+            onChange: e => setEmailConfirmation(e.target.value),
+            size: 6
+        }
+    ]
 
-        order.buyer = {name, email, phone};
+    const generateAlert = (msg, variant) => <Row>
+                                                <Col md="12">
+                                                    <Alert variant={variant}>{ msg }</Alert>
+                                                </Col>
+                                            </Row>
+
+    const isEmptyClientInfo = () => {
+        const hasFirstName = (firstName && firstName !== '');
+        const hasLastName = (lastName && lastName !== '');
+        const hasPhone = (phone && phone !== '');
+        const hasEmail = (email && email !== '');
+        const hasConfirmationEmail = (emailConfirmation && emailConfirmation !== '');
+        return hasFirstName && hasPhone && hasLastName && hasEmail && hasConfirmationEmail;
+    }
+
+    const isEmailConfirmated = () => email === emailConfirmation;
+
+    const isValidClientInfo = () => isEmptyClientInfo() && isEmailConfirmated();
+
+    const generateOrder = () => {
+        setLoading(true);
+        let order = {};
+        const name = `${firstName} ${lastName}`
+
+        order.buyer = { name, email, phone };
         order.total = getTotalCart();
         order.items = cart.map(cartItem => {
             const id = cartItem.item.id;
@@ -28,127 +94,73 @@ const Cart = () => {
         
         addOrder(order)
             .then(document => {
-                console.log(`Orden agregada exitosamente!!! orden ID ${document.id}`)
-                console.log('Se inicia actualización de stock en DB...')
                 triggerMassiveStockUpdate(cart)
                     .then(() => {
-                        console.log('Actualización masiva de stock exitosa!')
-                        clearCart()
+                        clearCart();
+                        setLoading(false);
                     })
                     .catch(err => console.log(err))
                     .finally(() => {
-                        console.log(`Proceso de actualización masiva de stock finalizada\nRedirigiendo al home...`)
-                        history.push('/cart/finished')
+                        history.push(`/cart/finished/${document.id}`)
                     });
             })
             .catch(err => console.log(err))
             .finally(() => console.log('Proceso de compra finalizado'));
     }
 
-    const isValidClientInfo = () => (name && name !== '') && (phone && phone !== '') && (email && email !== '')
-
     return (
         <div>
-            {   
+            {   loading ? <LoadingPage /> :
                 cart.length > 0 ?
-                    <div className="container">
-                        {
-                            !isValidClientInfo() &&
-                            <div className="row">
-                                <div className="col-md-12">    
-                                    <div className="alert alert-info" role="alert">
-                                        No se podrá completar el proceso de compra si es que no rellenas con tu información personal
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                        <div className="row border-0 cart-button-group">
-                            <div className="col-md-8">
+                    <Container>
+                        { !isEmptyClientInfo() && generateAlert('No se podrá completar el proceso de compra si es que no rellenas con tu información personal', 'info') }
+                        { !isEmailConfirmated() && generateAlert('El e-mail de confirmación no es igual al e-mail del cliente ingresado', 'danger') }
+                        <Row className="border-0 cart-button-group">
+                            <Col md="8">
                                 <div className="text-left">
                                     <p className="h1">Carro de compras</p>
                                 </div>
-                            </div>
-                            <div className="col-md-4">
+                            </Col>
+                            <Col md="4">
                                 <div className="text-right">
-                                    <button className="btn btn-danger header-button" onClick={clearCart}>
+                                    <Button variant="danger" className="header-button" onClick={clearCart}>
                                         Limpiar Carro
-                                    </button>
-                                    <button className="btn btn-primary header-button" onClick={generateOrder} disabled={!isValidClientInfo()}>
+                                    </Button>
+                                    <Button variant="primary" className="header-button" onClick={generateOrder} disabled={!isValidClientInfo()}>
                                         Finalizar compra
-                                    </button>
+                                    </Button>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="row border-0 cart-button-group">
-                            <div className="col-md-5">
-                                <input type="text"
-                                    className="form-control"
-                                    placeholder="Nombre"
-                                    value={name}
-                                    onChange={e => setName(e.target.value)}
-                                    aria-label="Nombre" />
-                            </div>
-                            <div className="col-md-4">
-                                <input type="text" 
-                                    className="form-control"
-                                    placeholder="E-mail"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    aria-label="E-mail" />
-                            </div>
-                            <div className="col-md-3">
-                                <input type="text"
-                                    className="form-control"
-                                    placeholder="Teléfono"
-                                    value={phone}
-                                    onChange={e => setPhone(e.target.value)}
-                                    aria-label="Telefono" />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-10">
-                                {   
-                                    cart.map((cartElement) => 
-                                        <div key={`cart-item-key-${cartElement.item?.id}`} className="col-md-12">
-                                            <div className="card mb-3 card-cart">
-                                                <div className="row g-0">
-                                                    <div className="col">
-                                                        <button type="button" className="btn btn-ligth" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Eliminar item" onClick={() => removeItemToCart(cartElement.item?.id)}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
-                                                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    <div className="col-md-4">
-                                                        <img src={cartElement.item?.imgUrl} className="img-fluid" alt={cartElement.item?.title} />
-                                                    </div>
-                                                    <div className="col-md-7">
-                                                        <div className="card-body">
-                                                            <h5 className="card-title">{ cartElement.item?.title }</h5>
-                                                            <p className="card-text text-muted">{ cartElement.item?.subtitle }</p>
-                                                            <p className="card-text">
-                                                                <small className="text-muted">Precio Unitario: $ {cartElement.item?.price}</small>
-                                                                <br></br>
-                                                                <small className="text-muted">Cantidad: {cartElement.quantity}</small>
-                                                            </p>
-                                                            <p className="card-text">$ { cartElement.item?.price *  cartElement.quantity }</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ) 
-                                }
-                            </div>
-                            <div className="col-md-2">
+                            </Col>
+                        </Row>
+                        <Row className="border-0 cart-button-group">
+                            {
+                                formInputs.map((input, index) => 
+                                    <Col key={index} md={input.size}>
+                                        <Form.Group controlId={input.title}>
+                                            <Form.Control 
+                                                type="text"
+                                                placeholder={input.title}
+                                                value={input.state}
+                                                onChange={input.onChange}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                )
+                            }
+                        </Row>
+                        <Row>
+                            <Col md="10">
+                                { cart.map(cartElement => <CartElement key={cartElement.item?.id} element={cartElement} removeElement={removeItemToCart} />) }
+                            </Col>
+                            <Col md="2">
                                 <h4>Total: ${getTotalCart()}</h4>
-                            </div>
-                        </div>
-                    </div> :
+                            </Col>
+                        </Row>
+                    </Container>:
                     <ResultPage
                         titleText="Carro de compras vacío"
                         buttonText="Volver al catálogo"
-                        redirectPath="/"
+                        redirectPath="/category"
                      />
             }
         </div>

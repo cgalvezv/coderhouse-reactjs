@@ -1,11 +1,18 @@
-import './ItemDetail.css'
 import React , { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import ItemCount from '../ItemCount/ItemCount';
 import { CartRawContext } from "../../contexts/cartContext";
+import ItemCount from '../ItemCount/ItemCount';
+import './ItemDetail.css';
+import {  
+    Row,
+    Col,
+    Button,
+    Image
+} from 'react-bootstrap';
 
 const ItemDetail = ({ item }) => {
     const [ count, setCount ] = useState(0);
+    
     const { addItemToCart } = useContext(CartRawContext)
 
     const addQtyItems = (qty) => {
@@ -13,39 +20,45 @@ const ItemDetail = ({ item }) => {
         addItemToCart(item, qty)
     }
 
+    const availableStockText = item.stock > 0 ? `Stock disponible: ${item?.stock}` : 'No hay stock disponible';
+
     return (
-        <div className="container_item-detail row">
-            <div className="col-md-7">
-                <div className="row">
-                    <div className="col-md">
+        <Row className="container_item-detail">
+            <Col md="7">
+                <Row>
+                    <Col md="12">
                         <h1 className="display-4">{item?.title}</h1>
                         <p className="lead">{item?.description}</p>
-                        <h1 className="display-5">$ {item?.price}</h1>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col text-center">
-                        <ItemCount initial={1} stock={item?.stock} onAdd={addQtyItems}/>
-                    </div>
-                </div>
+                        <b>{availableStockText}</b>
+                        <h1 className="display-5 price-text">$ {item?.price}</h1>
+                    </Col>
+                </Row>
+                {
+                    item.stock > 0 &&
+                        <Row>
+                            <Col md="12" className="text-center">
+                                <ItemCount initial={1} stock={item?.stock} onAdd={addQtyItems}/>
+                            </Col>
+                        </Row>
+                }
                 {
                     count > 0 && 
-                        <div className="row container_item-added">
-                            <div className="col-md-6">
+                        <Row className="container_item-added">
+                            <Col md="6">
                                 <p>Agregaste {count} item(s)</p>
-                            </div>
-                            <div className="col-md-6">
-                                <Link className="btn btn-link" to="/cart">
+                            </Col>
+                            <Col md="6">
+                                <Button as={Link} to="/cart" variant="link">
                                     Terminar mi compra
-                                </Link>
-                            </div>
-                        </div>
+                                </Button>
+                            </Col>
+                        </Row>
                 }
-            </div>
-            <div className="col-md-5">
-                <img src={item?.imgUrl} className="img-fluid img-thumbnail" alt={item?.title} />
-            </div>
-        </div>
+            </Col>
+            <Col md="5">
+                <Image src={item?.imgUrl} alt={item?.title} fluid thumbnail className="item-detail_img"/>
+            </Col>
+        </Row>
     )
 }
 
